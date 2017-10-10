@@ -2,18 +2,18 @@
 
 exports.home = {
   handler: (request, reply) => {
-    reply.view('main', { title: 'Welcome to MyTweet' });
+    reply.view('home', { title: 'Tweet a MyTweet' });
   },
 };
 
-exports.signup = {
+exports.timeline = {
   handler: (request, reply) => {
-    reply.view('signup', { title: 'Signup for MyTweet' });
+    reply.view('timeline', { title: 'View MyTweets' });
   },
 };
 
-exports.login = {
+exports.tweet = {
   handler: (request, reply) => {
-    reply.view('login', { title: 'Login to MyTweet' });
+    reply.redirect('/timeline');
   },
 };
