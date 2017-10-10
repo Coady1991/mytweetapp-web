@@ -6,7 +6,7 @@ var server = new Hapi.Server();
 server.connection({ port: process.env.PORT || 4000 });
 
 server.bind({
-  currentUser: {},
+  //currentUser: {},
   users: {},
   tweets: [],
 });
@@ -30,7 +30,7 @@ server.register([require('inert'), require('vision'), require('hapi-auth-cookie'
 
   server.auth.strategy('standard', 'cookie', {
     password: 'secretpasswordnotrevealedtoanyone',
-    cookie: 'donation-cookie',
+    cookie: 'tweet-cookie',
     isSecure: false,
     ttl: 24 * 60 * 60 * 1000,
   });

@@ -35,10 +35,13 @@ exports.authenticate = {
   handler: function (request, reply) {
     const user = request.payload;
     if ((user.email in this.users) && (user.password === this.users[user.email].password)) {
-      this.currentUser = this.users[user.email];
+      request.cookieAuth.set({
+        loggedIn: true,
+        loggedInUser: user.email,
+      });
       reply.redirect('/home');
     } else {
-      reply.redirect('/signup');
+      reply.redirect('/login');
     }
   },
 };
@@ -46,7 +49,7 @@ exports.authenticate = {
 exports.logout = {
   auth: false,
   handler: function (request, reply) {
-    const user = request.payload;
+    request.cookieAuth.clear();
     reply.redirect('/');
   },
 };
