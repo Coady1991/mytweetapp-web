@@ -17,7 +17,8 @@ exports.timeline = {
 
 exports.tweet = {
   handler: function (request, reply) {
-    const data = request.payload;
+    let data = request.payload;
+    data.tweeter = this.currentUser;
     this.tweets.push(data);
     reply.redirect('/timeline');
   },
