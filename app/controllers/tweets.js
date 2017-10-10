@@ -7,13 +7,18 @@ exports.home = {
 };
 
 exports.timeline = {
-  handler: (request, reply) => {
-    reply.view('timeline', { title: 'View MyTweets' });
+  handler: function (request, reply) {
+    reply.view('timeline', {
+      title: 'MyTweets',
+      tweets: this.tweets,
+    });
   },
 };
 
 exports.tweet = {
-  handler: (request, reply) => {
+  handler: function (request, reply) {
+    const data = request.payload;
+    this.tweets.push(data);
     reply.redirect('/timeline');
   },
 };

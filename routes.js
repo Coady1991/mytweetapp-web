@@ -5,6 +5,7 @@ const Accounts = require('./app/controllers/accounts');
 module.exports = [
   { method: 'GET', path: '/home', config: Tweets.home },
   { method: 'GET', path: '/timeline', config: Tweets.timeline },
+  { method: 'POST', path: '/tweet', config: Tweets.tweet },
 
   { method: 'GET', path: '/', config: Accounts.main },
   { method: 'GET', path: '/signup', config: Accounts.signup },
