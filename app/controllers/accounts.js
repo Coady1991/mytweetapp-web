@@ -53,3 +53,19 @@ exports.logout = {
     reply.redirect('/');
   },
 };
+
+exports.viewSettings = {
+  handler: function (request, reply) {
+    var userEmail = request.auth.credentials.loggedInUser;
+    var currentUserDetails = this.users[userEmail];
+    reply.view('settings', { title: 'Edit Account Settings', user: currentUserDetails });
+  },
+};
+
+exports.updateSettings = {
+  handler: function (request, reply) {
+    const user = request.payload;
+    this.users[user.email] = user;
+    reply.redirect('/settings');
+  },
+};
