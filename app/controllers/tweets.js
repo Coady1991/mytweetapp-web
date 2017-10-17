@@ -1,6 +1,7 @@
 'use strict';
 
 const Tweet = require('../models/tweet');
+const User = require('../models/user');
 
 exports.home = {
   handler: (request, reply) => {
@@ -23,10 +24,13 @@ exports.timeline = {
 
 exports.tweet = {
   handler: function (request, reply) {
-    let data = request.payload;
-    data.tweeter = request.auth.credentials.loggedInUser;
-    const tweet = new Tweet(data);
-    tweet.save().then(newTweet => {
+    let userEmail = request.auth.credentials.loggedInUser;
+    User.findOne({ email: userEmail }).then(user => {
+      let data = request.payload;
+      const tweet = new Tweet(data);
+      tweet.tweeter = user._id;
+      return tweet.save();
+    }).then(newTweet => {
       reply.redirect('/timeline');
     }).catch(err => {
       reply.redirect('/');
