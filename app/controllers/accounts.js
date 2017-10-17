@@ -118,6 +118,28 @@ exports.viewSettings = {
 };
 
 exports.updateSettings = {
+
+  validate: {
+
+    options: {
+      abortEarly: false,
+    },
+
+    payload: {
+      firstName: Joi.string().required(),
+      lastName: Joi.string().required(),
+      email: Joi.string().email().required(),
+      password: Joi.string().required(),
+    },
+
+    failAction: function (request, reply, source, error) {
+      reply.view('settings', {
+        title: 'Sign up error',
+        errors: error.data.details,
+      }).code(400);
+    },
+
+  },
   handler: function (request, reply) {
     const editedUser = request.payload;
     const loggedInUserEmail = request.auth.credentials.loggedInUser;
