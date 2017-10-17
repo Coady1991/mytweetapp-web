@@ -1,5 +1,7 @@
 'use strict';
 
+const Tweet = require('../models/tweet');
+
 exports.home = {
   handler: (request, reply) => {
     reply.view('home', { title: 'Tweet a MyTweet' });
@@ -8,9 +10,13 @@ exports.home = {
 
 exports.timeline = {
   handler: function (request, reply) {
-    reply.view('timeline', {
-      title: 'MyTweets',
-      tweets: this.tweets,
+    Tweet.find({}).exec().then(allTweets => {
+      reply.view('timeline', {
+        title: 'MyTweets',
+        tweets: allTweets,
+      });
+    }).catch(err => {
+      reply.redirect('/');
     });
   },
 };
@@ -18,9 +24,11 @@ exports.timeline = {
 exports.tweet = {
   handler: function (request, reply) {
     let data = request.payload;
-    const tweeterEmail = request.auth.credentials.loggedInUser;
-    data.tweeter = this.users[tweeterEmail];
-    this.tweets.push(data);
-    reply.redirect('/timeline');
+    const tweet = new Tweet(data);
+    tweet.save().then(newTweet => {
+      reply.redirect('/timeline');
+    }).catch(err => {
+      reply.redirect('/');
+    });
   },
 };
