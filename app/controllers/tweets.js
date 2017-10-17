@@ -24,6 +24,7 @@ exports.timeline = {
 exports.tweet = {
   handler: function (request, reply) {
     let data = request.payload;
+    data.tweeter = request.auth.credentials.loggedInUser;
     const tweet = new Tweet(data);
     tweet.save().then(newTweet => {
       reply.redirect('/timeline');
