@@ -67,15 +67,29 @@ exports.logout = {
 exports.viewSettings = {
   handler: function (request, reply) {
     var userEmail = request.auth.credentials.loggedInUser;
-    var currentUserDetails = this.users[userEmail];
-    reply.view('settings', { title: 'Edit Account Settings', user: currentUserDetails });
+    User.findOne({ email: userEmail }).then(foundUser => {
+      reply.view('settings', { title: 'Edit Account Settings', user: foundUser });
+    }).catch(err => {
+      reply.redirect('/');
+    });
   },
 };
 
 exports.updateSettings = {
   handler: function (request, reply) {
-    const user = request.payload;
-    this.users[user.email] = user;
-    reply.redirect('/settings');
+    const editedUser = request.payload;
+    const loggedInUserEmail = request.auth.credentials.loggedInUser;
+
+    User.findOne({ email: loggedInUserEmail }).then(user => {
+      user.firstName = editedUser.firstName;
+      user.lastName = editedUser.lastName;
+      user.email = editedUser.email;
+      user.password = editedUser.password;
+      return user.save();
+    }).then(user => {
+      reply.view('settings', { title: 'Edit Account Settings', user: user });
+    }).catch(err => {
+      reply.redirect('/');
+    });
   },
 };
