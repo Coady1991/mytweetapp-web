@@ -11,7 +11,7 @@ exports.home = {
 
 exports.timeline = {
   handler: function (request, reply) {
-    Tweet.find({}).exec().then(allTweets => {
+    Tweet.find({}).populate('tweeter').then(allTweets => {
       reply.view('timeline', {
         title: 'MyTweets',
         tweets: allTweets,
