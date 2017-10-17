@@ -1,8 +1,9 @@
 'use strict';
 
 const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 
-let dbURI = 'mongodb://localhost/donation';
+let dbURI = 'mongodb://localhost/mytweetapp';
 if (process.env.NODE_ENV === 'production') {
   dbURI = process.env.MONGOLAB_URI;
 }
