@@ -19,6 +19,7 @@ module.exports = [
 
   { method: 'GET', path: '/adminhome', config: Admins.adminhome },
   { method: 'GET', path: '/adminadduser', config: Admins.adminadduser },
+  { method: 'POST', path: '/adminnewuser', config: Admins.adminnewuser },
 
   {
     method: 'GET',
