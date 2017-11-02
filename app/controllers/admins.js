@@ -15,3 +15,11 @@ exports.adminhome = {
     });
   },
 };
+
+exports.adminadduser = {
+  handler: function (request, reply) {
+    reply.view('adminadduser', {
+      title: 'Admin Add New User',
+    });
+  },
+};
