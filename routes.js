@@ -1,6 +1,7 @@
 const Tweets = require('./app/controllers/tweets');
 const Assets = require('./app/controllers/assets');
 const Accounts = require('./app/controllers/accounts');
+const Admins = require('./app/controllers/admins');
 
 module.exports = [
   { method: 'GET', path: '/home', config: Tweets.home },
@@ -15,6 +16,8 @@ module.exports = [
   { method: 'POST', path: '/register', config: Accounts.register },
   { method: 'GET', path: '/settings', config: Accounts.viewSettings },
   { method: 'POST', path: '/settings', config: Accounts.updateSettings },
+
+  { method: 'GET', path: '/adminhome', config: Admins.adminhome },
 
   {
     method: 'GET',

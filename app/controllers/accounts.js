@@ -82,19 +82,27 @@ exports.authenticate = {
   },
   handler: function (request, reply) {
     const user = request.payload;
-    User.findOne({ email: user.email }).then(foundUser => {
-      if (foundUser && foundUser.password === user.password) {
-        request.cookieAuth.set({
-          loggedIn: true,
-          loggedInUser: user.email,
-        });
-        reply.redirect('/home');
-      } else {
-        reply.redirect('/signup');
-      }
-    }).catch(err => {
-      reply.redirect('/');
-    });
+    if (user.email == 'admin@mytweet.com' && user.password == 'admin') {
+      request.cookieAuth.set({
+        loggedIn: true,
+        loggedInAdmin: user.email,
+      });
+      reply.redirect('/adminhome');
+    } else {
+      User.findOne({ email: user.email }).then(foundUser => {
+        if (foundUser && foundUser.password === user.password) {
+          request.cookieAuth.set({
+            loggedIn: true,
+            loggedInUser: user.email,
+          });
+          reply.redirect('/home');
+        } else {
+          reply.redirect('/signup');
+        }
+      }).catch(err => {
+        reply.redirect('/');
+      });
+    }
   },
 };
 
