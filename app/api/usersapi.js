@@ -55,3 +55,16 @@ exports.deleteOne = {
     });
   },
 };
+
+exports.deleteAll = {
+
+  auth: false,
+
+  handler: function (request, reply) {
+    User.remove({}).then(err => {
+      reply().code(204);
+    }).catch(err => {
+      reply(Boom.badImplementation('Error removing users'));
+    });
+  },
+};
