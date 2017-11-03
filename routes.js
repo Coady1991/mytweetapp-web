@@ -8,6 +8,7 @@ module.exports = [
   { method: 'GET', path: '/timeline', config: Tweets.timeline },
   { method: 'POST', path: '/tweet', config: Tweets.tweet },
   { method: 'GET', path: '/usertimeline', config: Tweets.usertimeline },
+  { method: 'GET', path: '/deletetweet/{id}', config: Tweets.deletetweet },
 
   { method: 'GET', path: '/', config: Accounts.main },
   { method: 'GET', path: '/signup', config: Accounts.signup },

@@ -1,0 +1,26 @@
+<section class="ui raised segment">
+  <div class="ui two column center aligned middle aligned grid segment">
+    <div class="column">
+      <h1 align="center">My Timeline</h1>
+      <img src="images/my-timeline.png" class="ui centered medium image">
+    </div>
+    <div class="column">
+      <table class="ui very basic table">
+        <thead>
+        <tr>
+          <th> Tweet </th>
+          <th> </th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each tweets}}
+          <tr>
+            <td> {{tweet}} </td>
+            <td> <a href="/deletetweet/{{_id}}"><i class="large red trash icon"></i></a></td>
+          </tr>
+        {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

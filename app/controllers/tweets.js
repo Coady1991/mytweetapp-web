@@ -54,3 +54,14 @@ exports.tweet = {
     });
   },
 };
+
+exports.deletetweet = {
+  handler: function (request, reply) {
+    const tweetId = request.params.id;
+    Tweet.findOneAndRemove({ _id: tweetId }).then(success => {
+      reply.redirect('/usertimeline');
+    }).catch(err => {
+      reply.redirect('/home');
+    });
+  },
+};
