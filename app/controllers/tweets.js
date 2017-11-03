@@ -59,8 +59,10 @@ exports.deletetweet = {
   handler: function (request, reply) {
     const tweetId = request.params.id;
     Tweet.findOneAndRemove({ _id: tweetId }).then(success => {
+      console.log('Tweet successfully deleted');
       reply.redirect('/usertimeline');
     }).catch(err => {
+      console.log('Error deleteing tweet');
       reply.redirect('/home');
     });
   },
@@ -71,8 +73,10 @@ exports.deletealltweets = {
     let userEmail = request.auth.credentials.loggedInUser;
     User.findOne({ email: userEmail }).then(user => {
       Tweet.remove({ tweeter: user.id }).then(success => {
+        console.log('All tweets successfully deleted');
         reply.redirect('/usertimeline');
       }).catch(err => {
+        console.log('Error deleteing all tweets');
         reply.redirect('/home');
       });
     });
