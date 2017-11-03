@@ -88,6 +88,19 @@ exports.admindeletetweet = {
   },
 };
 
+exports.admindeletealltweets = {
+  handler: function (request, reply) {
+    const userId = request.params.id;
+    Tweet.remove({ tweeter: userId }).then(success => {
+      console.log('All tweets successfuly deleted');
+      reply.redirect('/adminhome');
+    }).catch(err => {
+      console.log('Error deleting all tweets');
+      reply.redirect('/adminhome');
+    });
+  },
+};
+
 exports.adminviewuser = {
   handler: function (request, reply) {
     const userId = request.params.id;

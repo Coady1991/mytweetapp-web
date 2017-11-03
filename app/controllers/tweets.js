@@ -62,7 +62,7 @@ exports.deletetweet = {
       console.log('Tweet successfully deleted');
       reply.redirect('/usertimeline');
     }).catch(err => {
-      console.log('Error deleteing tweet');
+      console.log('Error deleting tweet');
       reply.redirect('/home');
     });
   },
@@ -76,7 +76,7 @@ exports.deletealltweets = {
         console.log('All tweets successfully deleted');
         reply.redirect('/usertimeline');
       }).catch(err => {
-        console.log('Error deleteing all tweets');
+        console.log('Error deleting all tweets');
         reply.redirect('/home');
       });
     });
