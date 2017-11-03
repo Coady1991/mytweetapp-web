@@ -75,6 +75,19 @@ exports.admindeleteuser = {
   },
 };
 
+exports.admindeletetweet = {
+  handler: function (request, reply) {
+    const tweetId = request.params.id;
+    Tweet.findOneAndRemove({ _id: tweetId }).then(success => {
+      console.log('Tweet successfuly deleted');
+      reply.redirect('/adminhome');
+    }).catch(err => {
+      console.log('Error deleting tweet');
+      reply.redirect('/adminhome');
+    });
+  },
+};
+
 exports.adminviewuser = {
   handler: function (request, reply) {
     const userId = request.params.id;

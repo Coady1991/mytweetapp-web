@@ -8,12 +8,16 @@
         <thead>
         <tr>
           <th> Tweets </th>
+          <th width="200"> </th>
+          <th width="100"> Delete </th>
         </tr>
         </thead>
         <tbody>
         {{#each tweets}}
           <tr>
-            <td> {{tweet}} {{tweeter.firstName}} </td>
+            <td> {{tweet}} </td>
+            <td> {{tweeter.firstName}} {{tweeter.lastName}} </td>
+            <td> <a href="/admindeletetweet/{{id}}"><i class="large red trash icon"></i></a> </td>
           </tr>
         {{/each}}
         </tbody>
