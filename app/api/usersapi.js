@@ -42,3 +42,16 @@ exports.create = {
     });
   },
 };
+
+exports.deleteOne = {
+
+  auth: false,
+
+  handler: function (request, reply) {
+    User.remove({ _id: request.params.id }).then(user => {
+      reply(user).code(204);
+    }).catch(err => {
+      reply(Boom.notFound('id not found'));
+    });
+  },
+};
