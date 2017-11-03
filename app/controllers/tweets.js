@@ -22,6 +22,23 @@ exports.timeline = {
   },
 };
 
+exports.usertimeline = {
+  handler: function (request, reply) {
+    let userEmail = request.auth.credentials.loggedInUser;
+    User.findOne({ email: userEmail }).then(user => {
+      Tweet.find({ tweeter: user.id }).populate('tweeter').then(allTweets => {
+        reply.view('usertimeline', {
+          title: 'My Tweets',
+          tweets: allTweets,
+        });
+      }).catch(err => {
+        console.log(err);
+        reply.redirect('/');
+      });
+    });
+  },
+};
+
 exports.tweet = {
   handler: function (request, reply) {
     let userEmail = request.auth.credentials.loggedInUser;

@@ -1,0 +1,25 @@
+{{> mainmenu _id="usertimeline"}}
+
+<section class="ui raised segment">
+  <div class="ui two column center aligned middle aligned grid segment">
+    <div class="column">
+      <img src="images/timeline.jpg" class="ui centered medium image">
+    </div>
+    <div class="column">
+      <table class="ui very basic table">
+        <thead>
+        <tr>
+          <th> Tweet </th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each tweets}}
+          <tr>
+            <td> {{tweet}} </td>
+          </tr>
+        {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
