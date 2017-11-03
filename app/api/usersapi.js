@@ -15,3 +15,16 @@ exports.find = {
     });
   },
 };
+
+exports.findOne = {
+
+  auth: false,
+
+  handler: function (request, reply) {
+    User.findOne({ _id: request.params.id }).then(user => {
+      reply(user);
+    }).catch(err => {
+      reply(Boom.notFound('id not found'));
+    });
+  },
+};
