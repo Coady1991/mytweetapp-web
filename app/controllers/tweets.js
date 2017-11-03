@@ -65,3 +65,16 @@ exports.deletetweet = {
     });
   },
 };
+
+exports.deletealltweets = {
+  handler: function (request, reply) {
+    let userEmail = request.auth.credentials.loggedInUser;
+    User.findOne({ email: userEmail }).then(user => {
+      Tweet.remove({ tweeter: user.id }).then(success => {
+        reply.redirect('/usertimeline');
+      }).catch(err => {
+        reply.redirect('/home');
+      });
+    });
+  },
+};
