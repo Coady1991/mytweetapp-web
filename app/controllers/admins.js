@@ -1,6 +1,7 @@
 'use strict'
 
 const User = require('../models/user');
+const Tweet = require('../models/tweet');
 const Joi = require('joi');
 
 exports.adminhome = {
@@ -51,9 +52,25 @@ exports.adminnewuser = {
     const user = new User(request.payload);
 
     user.save().then(newUser => {
+      console.log('New User added');
       reply.redirect('/adminhome');
     }).catch(err => {
       reply.redirect('/');
+    });
+  },
+};
+
+exports.admindeleteuser = {
+  handler: function (request, reply) {
+    const userId = request.params.id;
+    Tweet.remove({ tweeter: userId }).then(removeTweetSuccess => {
+      console.log('User Tweets removed:', userId);
+      return User.findByIdAndRemove({ _id: userId });
+    }).then(removeUserSuccess => {
+      console.log('User removed:', userId);
+      reply.redirect('/adminhome');
+    }).catch(err => {
+      reply.redirect('/adminhome');
     });
   },
 };
