@@ -74,3 +74,18 @@ exports.admindeleteuser = {
     });
   },
 };
+
+exports.adminviewuser = {
+  handler: function (request, reply) {
+    const userId = request.params.id;
+    Tweet.find({ tweeter: userId }).populate('tweeter').then(userTweets => {
+      reply.view('adminviewuser', {
+        title: 'Tweets by user',
+        id: userId,
+        tweets: userTweets,
+      });
+    }).catch(err => {
+      reply.redirect('/');
+    });
+  },
+};
