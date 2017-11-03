@@ -7,13 +7,15 @@
       <table class="ui very basic table">
         <thead>
           <tr>
-            <th> Tweets </th>
+            <th> Tweet </th>
+            <th width="200"> Tweeter </th>
           </tr>
         </thead>
         <tbody>
         {{#each tweets}}
           <tr>
-            <td> {{tweet}} {{tweeter.firstName}} </td>
+            <td> {{tweet}} </td>
+            <td> {{tweeter.firstName }} {{tweeter.lastName}} </td>
           </tr>
         {{/each}}
         </tbody>
