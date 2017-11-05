@@ -1,0 +1,36 @@
+{
+  "users": {
+    "_model": "User",
+    "homer": {
+      "firstName": "Homer",
+      "lastName": "Simpson",
+      "email": "homer@simpson.com",
+      "password": "secret"
+    },
+    "bart": {
+      "firstName": "Bart",
+      "lastName": "Simpson",
+      "email": "bart@simpson.com",
+      "password": "secret"
+    }
+  },
+  "tweets": {
+    "_model": "Tweet",
+    "one": {
+      "tweet": "Duff Beer",
+      "tweeter": "->users.homer"
+    },
+    "two": {
+      "tweet": "Mmmmmmmm Donuts!!",
+      "tweeter": "->users.homer"
+    },
+    "three": {
+      "tweet": "D'oh!!!",
+      "tweeter": "->users.homer"
+    },
+    "four": {
+      "tweet": "Eat my shorts!!",
+      "tweeter": "->users.bart"
+    }
+  }
+}
