@@ -22,9 +22,9 @@ exports.findOne = {
     Tweet.findOne({ _id: request.params.id }).then(tweet => {
       if (tweet != null) {
         reply(tweet);
+      } else {
+        reply(Boom.notFound('id not found'));
       }
-
-      reply(Boom.notFound('id not found'));
     }).catch(err => {
       reply(Boom.notFound('id not found'));
     });
