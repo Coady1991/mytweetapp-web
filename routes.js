@@ -19,6 +19,8 @@ module.exports = [
   { method: 'POST', path: '/register', config: Accounts.register },
   { method: 'GET', path: '/settings', config: Accounts.viewSettings },
   { method: 'POST', path: '/settings', config: Accounts.updateSettings },
+  { method: 'POST', path: '/profilePicture', config: Accounts.profilePicture },
+  { method: 'GET', path: '/getProfilePicture/{id}', config: Accounts.getProfilePicture },
 
   { method: 'GET', path: '/adminhome', config: Admins.adminhome },
   { method: 'GET', path: '/adminadduser', config: Admins.adminadduser },

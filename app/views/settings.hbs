@@ -27,8 +27,24 @@
       </form>
       {{> formerror }}
     </div>
+
     <div class="column">
-      <img src="images/settings-logo.png" class="ui centered medium image">
+      {{#if user.picture.data}}
+        <div class="image">
+          <img src="/getProfilePicture/{{user.id}}" height="250" width="300" />
+        </div>
+      {{else}}
+        <img class="ui medium centered image" src="images/no-img.png"/>
+      {{/if}}
+
+      <form action="/profilePicture" enctype="multipart/form-data" method="POST">
+        <input type="file" name="picture">
+        <button class="ui blue submit button">Save</button>
+      </form>
     </div>
+
+
+
   </div>
+
 </section>

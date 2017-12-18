@@ -165,3 +165,32 @@ exports.updateSettings = {
     });
   },
 };
+
+exports.profilePicture = {
+  handler: function (request, reply) {
+    let userEmail = request.auth.credentials.loggedInUser;
+    let profilePic = request.payload.picture;
+
+    User.findOne({ email: userEmail }).then(user => {
+      if (profilePic.length) {
+        user.picture.data = profilePic;
+        user.save();
+      }
+
+      reply.redirect('/settings');
+    }).catch(err => {
+      reply.redirect('/');
+    });
+  },
+};
+
+exports.getProfilePicture = {
+  handler: function (request, reply) {
+    let userId = request.params.id;
+    User.findOne({ _id: userId }).then(user => {
+      reply(user.picture.data).type('image');
+    }).catch(err => {
+      reply.redirect('/');
+    });
+  },
+};

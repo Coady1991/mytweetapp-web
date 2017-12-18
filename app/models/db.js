@@ -3,8 +3,8 @@
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-let dbURI = 'mongodb://localhost/mytweetapp';
-//let dbURI = 'mongodb://tweetuser:tweetuser@ds249355.mlab.com:49355/tweet';
+//let dbURI = 'mongodb://localhost/mytweetapp';
+let dbURI = 'mongodb://tweetuser:tweetuser@ds249355.mlab.com:49355/tweet';
 if (process.env.NODE_ENV === 'production') {
   dbURI = process.env.MONGOLAB_URI;
 }
@@ -23,6 +23,7 @@ mongoose.connection.on('disconnected', function () {
   console.log('Mongoose disconnected');
 });
 
+/*
 mongoose.connection.on('connected', function () {
   console.log('Mongoose connected to ' + dbURI);
   if (process.env.NODE_ENV != 'production') {
@@ -37,4 +38,4 @@ mongoose.connection.on('connected', function () {
       console.log(error);
     });
   }
-});
+});*/
