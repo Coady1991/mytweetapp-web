@@ -5,7 +5,12 @@ const User = require('../models/user');
 
 exports.home = {
   handler: (request, reply) => {
-    reply.view('home', { title: 'Tweet a MyTweet' });
+    var userEmail = request.auth.credentials.loggedInUser;
+    User.findOne({ email: userEmail }).then(foundUser => {
+      reply.view('home', { title: 'Tweet a MyTweet', user: foundUser });
+    }).catch(err => {
+      reply.redirect('/');
+    });
   },
 };
 
