@@ -18,18 +18,22 @@
     "_model": "Tweet",
     "one": {
       "tweet": "Duff Beer",
+      "date": "12/18/2017, 11:09:00 AM",
       "tweeter": "->users.homer"
     },
     "two": {
       "tweet": "Mmmmmmmm Donuts!!",
+      "date": "12/18/2017, 11:10:00 AM",
       "tweeter": "->users.homer"
     },
     "three": {
       "tweet": "D'oh!!!",
+      "date": "12/18/2017, 11:01:00 AM",
       "tweeter": "->users.homer"
     },
     "four": {
       "tweet": "Eat my shorts!!",
+      "date": "12/18/2017, 11:09:45 AM",
       "tweeter": "->users.bart"
     }
   }

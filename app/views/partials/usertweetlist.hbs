@@ -15,7 +15,11 @@
         <tbody>
         {{#each tweets}}
           <tr>
-            <td> {{tweet}} </td>
+            <td> {{tweet}}
+              <div class="metadata">
+                <div class="date"><i class="wait icon"></i>{{date}}</div>
+              </div>
+            </td>
             <td> <a href="/deletetweet/{{_id}}"><i class="large red trash icon"></i></a></td>
           </tr>
         {{/each}}

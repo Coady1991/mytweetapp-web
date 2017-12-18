@@ -11,7 +11,7 @@ exports.home = {
 
 exports.timeline = {
   handler: function (request, reply) {
-    Tweet.find({}).populate('tweeter').then(allTweets => {
+    Tweet.find({}).populate('tweeter').sort({ date: 'desc' }).then(allTweets => {
       reply.view('timeline', {
         title: 'MyTweets',
         tweets: allTweets,
@@ -26,7 +26,7 @@ exports.usertimeline = {
   handler: function (request, reply) {
     let userEmail = request.auth.credentials.loggedInUser;
     User.findOne({ email: userEmail }).then(user => {
-      Tweet.find({ tweeter: user.id }).populate('tweeter').then(allTweets => {
+      Tweet.find({ tweeter: user.id }).populate('tweeter').sort({ date: 'desc' }).then(allTweets => {
         reply.view('usertimeline', {
           title: 'My Tweets',
           tweets: allTweets,
@@ -46,6 +46,9 @@ exports.tweet = {
       let data = request.payload;
       const tweet = new Tweet(data);
       tweet.tweeter = user._id;
+      let date = new Date();
+      tweet.date = date.toLocaleString();
+      console.log(tweet.date);
       return tweet.save();
     }).then(newTweet => {
       reply.redirect('/timeline');
