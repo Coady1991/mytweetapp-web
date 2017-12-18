@@ -8,19 +8,21 @@
         <thead>
         <tr>
           <th> Tweets </th>
-          <th width="200"> </th>
           <th width="100"> Delete </th>
         </tr>
         </thead>
         <tbody>
         {{#each tweets}}
           <tr>
-            <td> {{tweet}}
-              <div class="metadata">
+            <td>
+              <div class="content" style="font-size:18px">
+                <b>{{tweet}}</b>
+              </div><br>
+              <div class="metadata" style="color:grey">
+                {{tweeter.firstName}} {{tweeter.lastName}}
                 <div class="date"><i class="wait icon"></i>{{date}}</div>
               </div>
             </td>
-            <td> {{tweeter.firstName}} {{tweeter.lastName}} </td>
             <td> <a href="/admindeletetweet/{{id}}"><i class="large red trash icon"></i></a> </td>
           </tr>
         {{/each}}

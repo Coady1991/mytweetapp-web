@@ -8,18 +8,20 @@
         <thead>
           <tr>
             <th> Tweet </th>
-            <th width="200"> Tweeter </th>
           </tr>
         </thead>
         <tbody>
         {{#each tweets}}
           <tr>
-            <td> {{tweet}}
-              <div class="metadata">
-                <div class="date"><i class="wait icon"></i>{{date}}</div>
+            <td>
+              <div class="content" style="font-size:18px">
+                <b>{{tweet}}</b>
+              </div><br>
+              <div class="metadata" style="color:grey">
+                {{tweeter.firstName }} {{tweeter.lastName}}
+                <div class="date"><i class="grey wait icon"></i>{{date}}</div>
               </div>
             </td>
-            <td> {{tweeter.firstName }} {{tweeter.lastName}} </td>
           </tr>
         {{/each}}
         </tbody>
