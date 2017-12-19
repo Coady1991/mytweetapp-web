@@ -10,6 +10,7 @@ module.exports = [
   { method: 'GET', path: '/usertimeline', config: Tweets.usertimeline },
   { method: 'GET', path: '/deletetweet/{id}', config: Tweets.deletetweet },
   { method: 'GET', path: '/deletealltweets', config: Tweets.deletealltweets },
+  { method: 'GET', path: '/getPicture/{id}', config: Tweets.getPicture },
 
   { method: 'GET', path: '/', config: Accounts.main },
   { method: 'GET', path: '/signup', config: Accounts.signup },

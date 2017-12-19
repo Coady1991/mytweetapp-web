@@ -1,17 +1,19 @@
 <section class="ui raised segment">
   <div class="ui two column center aligned middle aligned grid segment">
     <div class="column">
-      <form action="/tweet" method="POST">
-        <div class="text">MyTweet</div>
+      <form action="/tweet" method="POST" enctype="multipart/form-data">
+        <h3> MyTweet </h3>
         <textarea class="message" rows="4" cols="40" name="tweet" maxlength="140"></textarea>
         <br>
         <span class="countdown"></span>
         <br>
+
+        <div class="column">
+          <img id="pic" height="150" width="300" src="images/default.jpg"/>
+          <input type="file" name="picture" onchange="readURL(this);">
+        </div>
         <button class="ui blue submit button"> Tweet </button>
       </form>
-    </div>
-    <div class="column">
-      <img src="images/tweet.jpg" class="ui centered medium image">
     </div>
   </div>
 </section>
@@ -28,4 +30,19 @@
     $('.message').change(updateCountdown);
     $('.message').keyup(updateCountdown);
   });
+
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        $('#pic')
+            .attr('src', e.target.result)
+            .width(300)
+            .height(250);
+      };
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
 </script>

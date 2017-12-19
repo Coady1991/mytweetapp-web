@@ -47,15 +47,20 @@ exports.usertimeline = {
 exports.tweet = {
   handler: function (request, reply) {
     let userEmail = request.auth.credentials.loggedInUser;
+    let tweetPic = request.payload.picture;
     User.findOne({ email: userEmail }).then(user => {
       let data = request.payload;
       const tweet = new Tweet(data);
       tweet.tweeter = user._id;
       let date = new Date();
-      tweet.date = date.toLocaleString();
+      tweet.date = date.toString().substring(0, 25);
+      if (tweetPic.length) {
+        tweet.picture.data = tweetPic;
+      }
+
       console.log(tweet.date);
-      return tweet.save();
-    }).then(newTweet => {
+      console.log(tweet.picture.data);
+      tweet.save();
       reply.redirect('/timeline');
     }).catch(err => {
       reply.redirect('/');
@@ -87,6 +92,17 @@ exports.deletealltweets = {
         console.log('Error deleting all tweets');
         reply.redirect('/home');
       });
+    });
+  },
+};
+
+exports.getPicture = {
+  handler: function (request, reply) {
+    let tweetId = request.params.id;
+    Tweet.findOne({ _id: tweetId }).then(tweet => {
+        reply(tweet.picture.data).type('image');
+      }).catch(err => {
+      reply.redirect('/');
     });
   },
 };

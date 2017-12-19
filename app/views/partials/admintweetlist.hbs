@@ -17,7 +17,13 @@
             <td>
               <div class="content" style="font-size:18px">
                 <b>{{tweet}}</b>
-              </div><br>
+              </div>
+              {{#if picture.data}}
+                <div class="image">
+                  <img src="/getPicture/{{id}}" height="150" width="150" />
+                </div>
+              {{/if}}
+              <br>
               <div class="metadata" style="color:grey">
                 <i class="user icon"></i>{{tweeter.firstName}} {{tweeter.lastName}}
                 <div class="date"><i class="wait icon"></i>{{date}}</div>
