@@ -1,6 +1,7 @@
 'use strict'
 
 const User = require('../models/user');
+const Tweet = require('../models/tweet');
 const Joi = require('joi');
 
 exports.main = {
@@ -189,6 +190,55 @@ exports.getProfilePicture = {
     let userId = request.params.id;
     User.findOne({ _id: userId }).then(user => {
       reply(user.picture.data).type('image');
+    }).catch(err => {
+      reply.redirect('/');
+    });
+  },
+};
+
+exports.otherUsers = {
+  handler: function (request, reply) {
+    User.find({}).populate('user').then(allUsers => {
+      reply.view('otherusers', {
+        title: 'MyTweet Users',
+        users: allUsers,
+      });
+    }).catch(err => {
+      reply.redirect('/');
+    });
+  },
+};
+
+exports.viewOtherUser = {
+  handler: function (request, reply) {
+    const userId = request.params.id;
+    User.findOne({ _id: userId }).then(user => {
+      Tweet.find({ tweeter: userId }).populate('tweeter').sort({ date: 'desc' }).then(userTweets => {
+        reply.view('userviewuser', {
+          title: 'Tweets by user',
+          user: user,
+          id: userId,
+          tweets: userTweets,
+        });
+      });
+    }).catch(err => {
+      reply.redirect('/');
+    });
+  },
+};
+
+exports.follow = {
+  handler: function (request, reply) {
+    let userEmail = request.auth.credentials.loggedInUser;
+    let userId = request.params.id;
+    User.findOne({ email: userEmail }).then(user => {
+      User.findOne({ _id: userId }).then(followUser => {
+        user.following.push(followUser._id);
+        followUser.followers.push(user._id);
+        user.save();
+        followUser.save();
+        reply.redirect('/timeline');
+      });
     }).catch(err => {
       reply.redirect('/');
     });

@@ -1,0 +1,17 @@
+{{> mainmenu }}
+
+<section class="ui raised segment">
+  <div class="ui grid">
+    <div class="six wide column">
+      {{> profilecard }}
+      <div class="ui button">
+        <a href="/follow/{{user.id}}"><i class="medium add user icon"></i></a>
+        Follow
+      </div>
+    </div>
+
+    <div class="ten wide column">
+      {{> otherusertweets }}
+    </div>
+  </div>
+</section>

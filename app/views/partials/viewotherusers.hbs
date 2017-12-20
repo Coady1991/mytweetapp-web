@@ -1,0 +1,17 @@
+<table class="ui single line table">
+  <tbody>
+  <div class="ui relaxed divided list">
+    {{#each users}}
+      <tr>
+        <td>
+          <div class="item">
+            <div class="content">
+              <i class="user icon"></i><a href="/userviewuser/{{id}}">{{firstName}} {{lastName}}</a>
+            </div>
+          </div>
+        </td>
+      </tr>
+    {{/each}}
+  </div>
+  </tbody>
+</table>

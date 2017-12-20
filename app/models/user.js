@@ -8,6 +8,8 @@ const userSchema = mongoose.Schema({
   email: String,
   password: String,
   picture: { data: Buffer, contentType: String },
+  following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 });
 
 const User = mongoose.model('User', userSchema);
