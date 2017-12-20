@@ -244,3 +244,21 @@ exports.follow = {
     });
   },
 };
+
+exports.unfollow = {
+  handler: function (request, reply) {
+    let loggedInUser = request.auth.credentials.loggedInUser;
+    const userId = request.params.id;
+    User.findOne({ email: loggedInUser }).then(user => {
+      User.findOne({ _id: userId }).then(unfollowUser => {
+        user.following.splice(unfollowUser._id, 1);
+        unfollowUser.followers.splice(user._id, 1);
+        user.save();
+        unfollowUser.save();
+        reply.redirect('/timeline');
+      });
+    }).catch(err => {
+      reply.redirect('/');
+    });
+  },
+};

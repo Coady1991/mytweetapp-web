@@ -2,6 +2,7 @@
 
 const Tweet = require('../models/tweet');
 const User = require('../models/user');
+const Joi = require('joi');
 
 exports.home = {
   handler: (request, reply) => {
@@ -45,6 +46,32 @@ exports.usertimeline = {
 };
 
 exports.tweet = {
+
+  validate: {
+
+    options: {
+      abortEarly: false,
+    },
+
+    payload: {
+      tweet: Joi.string().required(),
+      picture: Joi,
+    },
+
+    failAction: function (request, reply, source, error) {
+      var userEmail = request.auth.credentials.loggedInUser;
+      User.findOne({ email: userEmail }).then(foundUser => {
+        reply.view('home', {
+          title: 'Tweet error',
+          user: foundUser,
+          errors: error.data.details,
+        }).code(400);
+      }).catch(err => {
+        reply.redirect('/');
+      });
+    },
+
+  },
   handler: function (request, reply) {
     let userEmail = request.auth.credentials.loggedInUser;
     let tweetPic = request.payload.picture;

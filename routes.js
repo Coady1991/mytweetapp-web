@@ -23,6 +23,7 @@ module.exports = [
   { method: 'POST', path: '/profilePicture', config: Accounts.profilePicture },
   { method: 'GET', path: '/getProfilePicture/{id}', config: Accounts.getProfilePicture },
   { method: 'GET', path: '/follow/{id}', config: Accounts.follow },
+  { method: 'GET', path: '/unfollow/{id}', config: Accounts.unfollow },
   { method: 'GET', path: '/otherusers', config: Accounts.otherUsers },
   { method: 'GET', path: '/userviewuser/{id}', config: Accounts.viewOtherUser },
 
