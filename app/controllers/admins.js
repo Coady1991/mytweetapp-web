@@ -7,9 +7,17 @@ const Joi = require('joi');
 exports.adminhome = {
   handler: function (request, reply) {
     User.find({}).populate('user').then(allUsers => {
-      reply.view('adminhome', {
-        title: 'Admin Home',
-        users: allUsers,
+      const totalUsers = allUsers.length;
+      Tweet.find({}).populate('tweets').then(allTweets => {
+        const totalTweets = allTweets.length;
+        const averageTweets = Math.round(totalTweets / totalUsers);
+        reply.view('adminhome', {
+          title: 'Admin Home',
+          users: allUsers,
+          totalUsers: totalUsers,
+          averageTweets: averageTweets,
+          totalTweets: totalTweets,
+        });
       });
     }).catch(err => {
       reply.redirect('/');
