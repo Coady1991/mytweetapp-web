@@ -1,4 +1,6 @@
-<table class="ui single line table">
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+
+<table class="ui single line table" id="myTable">
   <tbody>
   <div class="ui relaxed divided list">
     {{#each users}}
@@ -15,3 +17,5 @@
   </div>
   </tbody>
 </table>
+
+<script src="js/search.js"></script>

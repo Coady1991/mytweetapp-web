@@ -20,30 +20,5 @@
 </section>
 
 <!-- https://stackoverflow.com/questions/2136647/character-countdown-like-on-twitter -->
-<script>
-  function updateCountdown() {
-    let remaining = 140 - jQuery('.message').val().length;
-    jQuery('.countdown').text(remaining + ' characters remaining.')
-  }
-
-  jQuery(document).ready(function($) {
-    updateCountdown();
-    $('.message').change(updateCountdown);
-    $('.message').keyup(updateCountdown);
-  });
-
-  function readURL(input) {
-    if (input.files && input.files[0]) {
-      var reader = new FileReader();
-
-      reader.onload = function (e) {
-        $('#pic')
-            .attr('src', e.target.result)
-            .width(300)
-            .height(250);
-      };
-
-      reader.readAsDataURL(input.files[0]);
-    }
-  }
-</script>
+<script src="js/displayimage.js"></script>
+<script src="js/countdown.js"></script>

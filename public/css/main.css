@@ -1,0 +1,8 @@
+#myInput {
+    background: url('../images/searchicon.png') no-repeat 10px 10px;
+    width: 100%;
+    font-size: 16px;
+    padding: 12px 20px 12px 40px;
+    border: 1px solid #000;
+    margin-bottom: 12px;
+}
