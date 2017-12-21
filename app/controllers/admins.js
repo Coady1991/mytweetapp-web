@@ -3,6 +3,8 @@
 const User = require('../models/user');
 const Tweet = require('../models/tweet');
 const Joi = require('joi');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 exports.adminhome = {
   handler: function (request, reply) {
@@ -58,12 +60,16 @@ exports.adminnewuser = {
   },
   handler: function (request, reply) {
     const user = new User(request.payload);
+    const plaintextPassword = user.password;
 
-    user.save().then(newUser => {
-      console.log('New User added');
-      reply.redirect('/adminhome');
-    }).catch(err => {
-      reply.redirect('/');
+    bcrypt.hash(plaintextPassword, saltRounds, function (err, hash) {
+      user.password = hash;
+      return user.save().then(newUser => {
+        console.log('New User added');
+        reply.redirect('/adminhome');
+      }).catch(err => {
+        reply.redirect('/');
+      });
     });
   },
 };
@@ -126,3 +132,39 @@ exports.adminviewuser = {
     });
   },
 };
+
+/* Unhashed adminnewuser
+exports.adminnewuser = {
+  auth: false,
+
+  validate: {
+
+    options: {
+      abortEarly: false,
+    },
+
+    payload: {
+      firstName: Joi.string().required(),
+      lastName: Joi.string().required(),
+      email: Joi.string().email().required(),
+      password: Joi.string().required(),
+    },
+
+    failAction: function (request, reply, source, error) {
+      reply.view('adminadduser', {
+        title: 'Add new user error',
+        errors: error.data.details,
+      }).code(400);
+    },
+  },
+  handler: function (request, reply) {
+    const user = new User(request.payload);
+
+    user.save().then(newUser => {
+      console.log('New User added');
+      reply.redirect('/adminhome');
+    }).catch(err => {
+      reply.redirect('/');
+    });
+  },
+}; */

@@ -3,6 +3,8 @@
 const User = require('../models/user');
 const Tweet = require('../models/tweet');
 const Joi = require('joi');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 exports.main = {
   auth: false,
@@ -50,11 +52,15 @@ exports.register = {
   },
   handler: function (request, reply) {
     const user = new User(request.payload);
+    const plaintextPassword = user.password;
 
-    user.save().then(newUser => {
-      reply.redirect('/login');
-    }).catch(err => {
-      reply.redirect('/');
+    bcrypt.hash(plaintextPassword, saltRounds, function (err, hash) {
+      user.password = hash;
+      return user.save().then(newUser => {
+        reply.redirect('/login');
+      }).catch(err => {
+        reply.redirect('/');
+      });
     });
   },
 };
@@ -91,15 +97,17 @@ exports.authenticate = {
       reply.redirect('/adminhome');
     } else {
       User.findOne({ email: user.email }).then(foundUser => {
-        if (foundUser && foundUser.password === user.password) {
-          request.cookieAuth.set({
-            loggedIn: true,
-            loggedInUser: user.email,
-          });
-          reply.redirect('/home');
-        } else {
-          reply.redirect('/signup');
-        }
+        bcrypt.compare(user.password, foundUser.password, function (err, isValid) {
+          if (isValid) {
+            request.cookieAuth.set({
+              loggedIn: true,
+              loggedInUser: user.email,
+            });
+            reply.redirect('/home');
+          } else {
+            reply.redirect('/signup');
+          }
+        });
       }).catch(err => {
         reply.redirect('/');
       });
@@ -138,7 +146,7 @@ exports.updateSettings = {
       firstName: Joi.string().required(),
       lastName: Joi.string().required(),
       email: Joi.string().email().required(),
-      password: Joi.string().required(),
+      password: Joi,
     },
 
     failAction: function (request, reply, source, error) {
@@ -157,8 +165,12 @@ exports.updateSettings = {
       user.firstName = editedUser.firstName;
       user.lastName = editedUser.lastName;
       user.email = editedUser.email;
-      user.password = editedUser.password;
-      return user.save();
+      bcrypt.hash(editedUser.password, saltRounds, function (err, hash) {
+        user.password = hash;
+        user.save();
+      });
+
+      return user;
     }).then(user => {
       reply.view('settings', { title: 'Edit Account Settings', user: user });
     }).catch(err => {
@@ -262,3 +274,127 @@ exports.unfollow = {
     });
   },
 };
+
+/* Unhashed register, authenticate and updateSettings
+exports.register = {
+  auth: false,
+
+  validate: {
+
+    options: {
+      abortEarly: false,
+    },
+
+    payload: {
+      firstName: Joi.string().required(),
+      lastName: Joi.string().required(),
+      email: Joi.string().email().required(),
+      password: Joi.string().required(),
+    },
+
+    failAction: function (request, reply, source, error) {
+      reply.view('signup', {
+        title: 'Sign up error',
+        errors: error.data.details,
+      }).code(400);
+    },
+  },
+  handler: function (request, reply) {
+    const user = new User(request.payload);
+
+    user.save().then(newUser => {
+      reply.redirect('/login');
+    }).catch(err => {
+      reply.redirect('/');
+    });
+  },
+};
+
+exports.authenticate = {
+  auth: false,
+
+  validate: {
+
+    options: {
+      abortEarly: false,
+    },
+
+    payload: {
+      email: Joi.string().email().required(),
+      password: Joi.string().required(),
+    },
+
+    failAction: function (request, reply, source, error) {
+      reply.view('login', {
+        title: 'Sign in error',
+        errors: error.data.details,
+      }).code(400);
+    },
+
+  },
+  handler: function (request, reply) {
+    const user = request.payload;
+    if (user.email == 'admin@mytweet.com' && user.password == 'admin') {
+      request.cookieAuth.set({
+        loggedIn: true,
+        loggedInAdmin: user.email,
+      });
+      reply.redirect('/adminhome');
+    } else {
+      User.findOne({ email: user.email }).then(foundUser => {
+        if (foundUser && foundUser.password === user.password) {
+          request.cookieAuth.set({
+            loggedIn: true,
+            loggedInUser: user.email,
+          });
+          reply.redirect('/home');
+        } else {
+          reply.redirect('/signup');
+        }
+      }).catch(err => {
+        reply.redirect('/');
+      });
+    }
+  },
+};
+
+exports.updateSettings = {
+
+  validate: {
+
+    options: {
+      abortEarly: false,
+    },
+
+    payload: {
+      firstName: Joi.string().required(),
+      lastName: Joi.string().required(),
+      email: Joi.string().email().required(),
+      password: Joi.string().required(),
+    },
+
+    failAction: function (request, reply, source, error) {
+      reply.view('settings', {
+        title: 'Sign up error',
+        errors: error.data.details,
+      }).code(400);
+    },
+
+  },
+  handler: function (request, reply) {
+    const editedUser = request.payload;
+    const loggedInUserEmail = request.auth.credentials.loggedInUser;
+
+    User.findOne({ email: loggedInUserEmail }).then(user => {
+      user.firstName = editedUser.firstName;
+      user.lastName = editedUser.lastName;
+      user.email = editedUser.email;
+      user.password = editedUser.password;
+      return user.save();
+    }).then(user => {
+      reply.view('settings', { title: 'Edit Account Settings', user: user });
+    }).catch(err => {
+      reply.redirect('/');
+    });
+  },
+}; */
