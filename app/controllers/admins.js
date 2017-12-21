@@ -112,11 +112,14 @@ exports.admindeletealltweets = {
 exports.adminviewuser = {
   handler: function (request, reply) {
     const userId = request.params.id;
-    Tweet.find({ tweeter: userId }).populate('tweeter').sort({ date: 'desc' }).then(userTweets => {
-      reply.view('adminviewuser', {
-        title: 'Tweets by user',
-        id: userId,
-        tweets: userTweets,
+    User.findOne({ _id: userId }).then(user => {
+      Tweet.find({ tweeter: userId }).populate('tweeter').sort({ date: 'desc' }).then(userTweets => {
+        reply.view('adminviewuser', {
+          title: 'Tweets by user',
+          user: user,
+          id: userId,
+          tweets: userTweets,
+        });
       });
     }).catch(err => {
       reply.redirect('/');
