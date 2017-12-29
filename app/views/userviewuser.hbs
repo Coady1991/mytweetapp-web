@@ -4,16 +4,9 @@
   <div class="ui grid">
     <div class="six wide column">
       {{> profilecard }}
-      <div class="ui button">
-        <a href="/follow/{{user.id}}"><i class="medium add user icon"></i></a>
-        Follow
-      </div>
-      <div class="ui button">
-        <a href="/unfollow/{{user.id}}"><i class="medium remove user icon"></i></a>
-        Unfollow
-      </div>
+        <a href="/follow/{{user.id}}"><button class="ui button"><i class="medium add user icon"></i>Follow</button></a>
+        <a href="/unfollow/{{user.id}}"><button class="ui button"><i class="medium remove user icon"></i>Unfollow</button></a>
     </div>
-
     <div class="ten wide column">
       {{> otherusertweets }}
     </div>
