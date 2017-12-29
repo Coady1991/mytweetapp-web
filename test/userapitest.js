@@ -1,5 +1,7 @@
 'use strict';
 
+// For tests to pass, enable the mongoose seeder in models/db.js before running
+
 const assert = require('chai').assert;
 const TweetService = require('./tweet-service');
 const fixtures = require('./fixtures.json');
@@ -13,11 +15,13 @@ suite('User API tests', function () {
   const tweetService = new TweetService(fixtures.tweetService);
 
   beforeEach(function () {
-    tweetService.deleteAllUsers();
+    tweetService.login(users[0]);
+    //tweetService.deleteAllUsers();
   });
 
   afterEach(function () {
-    tweetService.deleteAllUsers();
+    //tweetService.deleteAllUsers();
+    tweetService.logout();
   });
 
   test('Create a user', function () {
@@ -46,28 +50,28 @@ suite('User API tests', function () {
     assert(tweetService.getUser(u._id) == null);
   });
 
-  test('Get all users', function () {
-    for (let u of users) {
-      tweetService.createUser(u);
-    }
-
-    const allUsers = tweetService.getUsers();
-    assert.equal(allUsers.length, users.length);
-  });
+  // test('Get all users', function () {
+  //   for (let u of users) {
+  //     tweetService.createUser(u);
+  //   }
+  //
+  //   const allUsers = tweetService.getUsers();
+  //   assert.equal(allUsers.length, users.length);
+  // });
 
   test('Get users detail', function () {
+    const returnedUsers = [];
     for (let u of users) {
-      tweetService.createUser(u);
+      returnedUsers.push(tweetService.createUser(u));
     }
 
-    const allUsers = tweetService.getUsers();
     for (let i = 0; i < users.length; i++) {
-      assert(_.some([allUsers[i]], users[i]), 'returnedUser must be a superset of newUser');
+      assert(_.some([returnedUsers[i]], users[i]), 'returnedUser must be a superset of newUser');
     }
   });
 
-  test('Get all users empty', function () {
-    const allUsers = tweetService.getUsers();
-    assert.equal(allUsers.length, 0);
-  });
+  // test('Get all users empty', function () {
+  //   const allUsers = tweetService.getUsers();
+  //   assert.equal(allUsers.length, 0);
+  // });
 });

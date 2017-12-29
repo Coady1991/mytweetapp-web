@@ -5,35 +5,35 @@
       "firstName": "Homer",
       "lastName": "Simpson",
       "email": "homer@simpson.com",
-      "password": "secret"
+      "password": "$2a$10$bf6RiX4RXK95ytlBgBnKnOC3XOADw7HhzpUKodNYnZURs1NSESSb2"
     },
     "bart": {
       "firstName": "Bart",
       "lastName": "Simpson",
       "email": "bart@simpson.com",
-      "password": "secret"
+      "password": "$2a$10$6dG2M4c4LOUZsxbBm9TuNezuZhriAuvKKTAQX2Fe56rgQDQjBH8Ai"
     }
   },
   "tweets": {
     "_model": "Tweet",
     "one": {
       "tweet": "Duff Beer",
-      "date": "12/18/2017, 11:09:00 AM",
+      "date": "Fri Dec 22 2017 11:31:16",
       "tweeter": "->users.homer"
     },
     "two": {
       "tweet": "Mmmmmmmm Donuts!!",
-      "date": "12/18/2017, 11:10:00 AM",
+      "date": "Fri Dec 22 2017 11:30:16",
       "tweeter": "->users.homer"
     },
     "three": {
       "tweet": "D'oh!!!",
-      "date": "12/18/2017, 11:01:00 AM",
+      "date": "Fri Dec 22 2017 13:29:16",
       "tweeter": "->users.homer"
     },
     "four": {
       "tweet": "Eat my shorts!!",
-      "date": "12/18/2017, 11:09:45 AM",
+      "date": "Fri Dec 22 2017 09:31:16",
       "tweeter": "->users.bart"
     }
   }

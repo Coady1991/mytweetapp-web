@@ -1,9 +1,13 @@
 const Tweet = require('../models/tweet');
 const Boom = require('boom');
+const utils = require('./utils.js');
 
 exports.find = {
 
   auth: false,
+  // auth: {
+  //   strategy: 'jwt',
+  // },
 
   handler: function (request, reply) {
     Tweet.find({}).exec().then(tweets => {
@@ -17,6 +21,9 @@ exports.find = {
 exports.findOne = {
 
   auth: false,
+  // auth: {
+  //   strategy: 'jwt',
+  // },
 
   handler: function (request, reply) {
     Tweet.findOne({ _id: request.params.id }).then(tweet => {
@@ -34,6 +41,9 @@ exports.findOne = {
 exports.create = {
 
   auth: false,
+  // auth: {
+  //   strategy: 'jwt',
+  // },
 
   handler: function (request, reply) {
     const tweet = new Tweet(request.payload);
@@ -48,6 +58,9 @@ exports.create = {
 exports.deleteOne = {
 
   auth: false,
+  // auth: {
+  //   strategy: 'jwt',
+  // },
 
   handler: function (request, reply) {
     Tweet.remove({ _id: request.params.id }).then(tweet => {
@@ -61,6 +74,9 @@ exports.deleteOne = {
 exports.deleteAll = {
 
   auth: false,
+  // auth: {
+  //   strategy: 'jwt',
+  // },
 
   handler: function (request, reply) {
     Tweet.remove({}).then(err => {

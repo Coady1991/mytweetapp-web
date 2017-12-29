@@ -5,19 +5,24 @@ const TweetService = require('./tweet-service');
 const fixtures = require('./fixtures.json');
 const _ = require('lodash');
 
+// For tests to pass, enable the mongoose seeder in models/db.js before running
+
 suite('Tweet API tests', function () {
 
   let tweets = fixtures.tweets;
   let newTweet = fixtures.newTweet;
+  let users = fixtures.users;
 
   const tweetService = new TweetService(fixtures.tweetService);
 
   beforeEach(function () {
+    tweetService.login(users[0]);
     tweetService.deleteAllTweets();
   });
 
   afterEach(function () {
     tweetService.deleteAllTweets();
+    tweetService.logout();
   });
 
   test('Create a tweet', function () {
