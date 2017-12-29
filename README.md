@@ -38,5 +38,5 @@ password: admin
 
 #### V1.0 of mytweetapp deployed at https://still-brook-41510.herokuapp.com/
 
-#### V1.2 of mytweetapp deployed at
+#### V1.2 of mytweetapp deployed at https://mytweetapp-12.herokuapp.com/
 
