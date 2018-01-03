@@ -8,6 +8,8 @@ module.exports = [
   { method: 'DELETE', path: '/api/users/{id}', config: UsersApi.deleteOne },
   { method: 'DELETE', path: '/api/users', config: UsersApi.deleteAll },
   { method: 'POST', path: '/api/users/authenticate', config: UsersApi.authenticate },
+  { method: 'POST', path: '/api/users/{id}/follow', config: UsersApi.follow },
+  { method: 'POST', path: '/api/users/{id}/unfollow', config: UsersApi.unfollow },
 
   { method: 'GET', path: '/api/tweets', config: TweetApi.find },
   { method: 'GET', path: '/api/tweets/{id}', config: TweetApi.findOne },

@@ -131,3 +131,53 @@ exports.authenticate = {
     });
   },
 }; */
+
+exports.follow = {
+
+  auth: false,
+  // auth: {
+  //   strategy: 'jwt',
+  // },
+
+  handler: function (request, reply) {
+    let userEmail = request.auth.credentials.loggedInUser;
+    let userId = request.params.id;
+    User.findOne({ email: userEmail }).then(user => {
+      User.findOne({ _id: userId }).then(followUser => {
+        user.following.push(followUser._id);
+        followUser.followers.push(user._id);
+        user.save();
+        followUser.save().then(User => {
+          reply(User).code(201);
+        });
+      });
+    }).catch(err => {
+      reply(Boom.badImplementation('Error following user'));
+    });
+  },
+};
+
+exports.unfollow = {
+
+  auth: false,
+  // auth: {
+  //   strategy: 'jwt',
+  // },
+
+  handler: function (request, reply) {
+    let loggedInUser = request.auth.credentials.loggedInUser;
+    const userId = request.params.id;
+    User.findOne({ email: loggedInUser }).then(user => {
+      User.findOne({ _id: userId }).then(unfollowUser => {
+        user.following.splice(unfollowUser._id, 1);
+        unfollowUser.followers.splice(user._id, 1);
+        user.save();
+        unfollowUser.save().then(User => {
+          reply(User).code(201);
+        });
+      });
+    }).catch(err => {
+      reply(Boom.badImplementation('Error unfollowing user'));
+    });
+  },
+};
