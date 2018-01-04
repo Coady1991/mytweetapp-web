@@ -141,10 +141,9 @@ exports.authenticate = {
     User.findOne({ email: user.email }).then(foundUser => {
       bcrypt.compare(user.password, foundUser.password, function (err, isValid) {
         if (isValid) {
-          const token = utils.createToken(foundUser);
-          reply({ success: true, token: token, user: foundUser }).code(201);
+          reply(foundUser).code(201);
         } else {
-          reply({ success: false, message: 'Authentication failed. User not found.' }).code(201);
+          reply(Boom.notFound('internal db failure'));
         }
       }).catch(err => {
         reply(Boom.notFound('internal db failure'));
