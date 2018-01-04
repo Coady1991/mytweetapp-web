@@ -41,7 +41,7 @@ exports.findOne = {
     });
   },
 };
-
+/*
 exports.create = {
 
   auth: false,
@@ -55,6 +55,27 @@ exports.create = {
       reply(newUser).code(201);
     }).catch(err => {
       reply(Boom.badImplementation('error creating User'));
+    });
+  },
+};*/
+
+//Hashed create
+exports.create = {
+
+  auth: false,
+  // auth: {
+  //   strategy: 'jwt',
+  // },
+
+  handler: function (request, reply) {
+    const user = new User(request.payload);
+    bcrypt.hash(user.password, saltRounds, function (err, hash) {
+      user.password = hash;
+      user.save().then(newUser => {
+        reply(newUser).code(201);
+      }).catch(err => {
+        reply(Boom.badImplementation('error creating User'));
+      });
     });
   },
 };
@@ -90,7 +111,7 @@ exports.deleteAll = {
     });
   },
 };
-
+/*
 exports.authenticate = {
 
   auth: false,
@@ -108,9 +129,9 @@ exports.authenticate = {
       reply(Boom.notFound('internal db failure'));
     });
   },
-};
+};*/
 
-/*Hashed authenticate
+//Hashed authenticate
 exports.authenticate = {
 
   auth: false,
@@ -130,7 +151,7 @@ exports.authenticate = {
       });
     });
   },
-}; */
+};
 
 exports.follow = {
 
