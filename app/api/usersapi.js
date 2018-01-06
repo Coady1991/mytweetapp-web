@@ -189,8 +189,8 @@ exports.unfollow = {
     const unFollowId = request.payload;
     User.findOne({ _id: userId }).then(user => {
       User.findOne({ _id: unFollowId }).then(unfollowUser => {
-        user.following.splice(unfollowUser._id, 1);
-        unfollowUser.followers.splice(user._id, 1);
+        user.following.remove(unFollowId);
+        unfollowUser.followers.remove(userId);
         user.save();
         unfollowUser.save().then(User => {
           reply(User).code(201);
