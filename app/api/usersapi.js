@@ -144,7 +144,7 @@ exports.authenticate = {
         if (isValid) {
           reply(foundUser).code(201);
         } else {
-          reply.code(204);
+          reply(Boom.notFound('internal db failure'));
         }
       }).catch(err => {
         reply(Boom.notFound('internal db failure'));
