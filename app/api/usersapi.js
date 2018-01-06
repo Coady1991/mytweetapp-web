@@ -166,8 +166,8 @@ exports.follow = {
       User.findOne({ _id: followId }).then(followUser => {
         user.following.push(followUser._id);
         followUser.followers.push(user._id);
-        user.save();
-        followUser.save().then(User => {
+        followUser.save();
+        user.save().then(User => {
           reply(User).code(201);
         });
       });
@@ -191,8 +191,8 @@ exports.unfollow = {
       User.findOne({ _id: unFollowId }).then(unfollowUser => {
         user.following.remove(unFollowId);
         unfollowUser.followers.remove(userId);
-        user.save();
-        unfollowUser.save().then(User => {
+        unfollowUser.save();
+        user.save().then(User => {
           reply(User).code(201);
         });
       });
