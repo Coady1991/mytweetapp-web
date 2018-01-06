@@ -98,11 +98,8 @@ exports.myTweets = {
   handler: function (request, reply) {
     User.findOne({ _id: request.params.id }).then(user => {
       Tweet.find({ tweeter: user }).exec().then(tweets => {
-        user.userTweets.push(tweets);
-        user.save().then(User => {
-          reply(User).code(201);
+          reply(tweets).code(201);
         });
-      });
     }).catch(err => {
       reply(Boom.badImplementation('Error retrieving user tweets'));
     });
