@@ -1,4 +1,5 @@
 const Tweet = require('../models/tweet');
+const User = require('../models/user');
 const Boom = require('boom');
 const utils = require('./utils.js');
 
@@ -83,6 +84,24 @@ exports.deleteAll = {
       reply().code(204);
     }).catch(err => {
       reply(Boom.badImplementation('Error removing tweets'));
+    });
+  },
+};
+
+exports.myTweets = {
+
+  auth: false,
+  // auth: {
+  //   strategy: jwt,
+  // },
+
+  handler: function (request, reply) {
+    User.findOne({ _id: request.params.id }).then(user => {
+      Tweet.find({ tweeter: user }).exec().then(tweets => {
+        reply(tweets).code(201);
+      });
+    }).catch(err => {
+      reply(Boom.badImplementation('Error retrieving user tweets'));
     });
   },
 };

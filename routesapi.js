@@ -17,5 +17,6 @@ module.exports = [
   { method: 'POST', path: '/api/tweets', config: TweetApi.create },
   { method: 'DELETE', path: '/api/tweets/{id}', config: TweetApi.deleteOne },
   { method: 'DELETE', path: '/api/tweets', config: TweetApi.deleteAll },
+  { method: 'GET', path: '/api/users/{id}/tweets', config: TweetApi.myTweets },
 
 ];
