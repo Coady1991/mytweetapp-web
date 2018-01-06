@@ -1,6 +1,7 @@
 'use srict'
 
 const User = require('../models/user');
+const Tweet = require('../models/tweet');
 const Boom = require('boom');
 const utils = require('./utils.js');
 const bcrypt = require('bcrypt');
@@ -198,6 +199,28 @@ exports.unfollow = {
       });
     }).catch(err => {
       reply(Boom.badImplementation('Error unfollowing user'));
+    });
+  },
+};
+
+exports.followingTimeline = {
+
+  auth: false,
+  // auth: {
+  //   strategy: 'jwt',
+  // },
+
+  handler: function (request, reply) {
+    let userId = request.params.id;
+
+    User.findOne({ _id: userId }).then(user => {
+      User.findOne({ _id: user.following }).then(followUser => {
+        Tweet.find({ tweeter: followUser }).exec().then(tweets => {
+          reply(tweets).code(201);
+        });
+      });
+    }).catch(err => {
+      reply(Boom.badImplementation('Error retrieving tweets'));
     });
   },
 };

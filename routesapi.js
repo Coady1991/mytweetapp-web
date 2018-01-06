@@ -10,6 +10,7 @@ module.exports = [
   { method: 'POST', path: '/api/users/authenticate', config: UsersApi.authenticate },
   { method: 'POST', path: '/api/users/{id}/follow', config: UsersApi.follow },
   { method: 'POST', path: '/api/users/{id}/unfollow', config: UsersApi.unfollow },
+  { method: 'GET', path: '/api/users/{id}/followingTimeline', config: UsersApi.followingTimeline },
 
   { method: 'GET', path: '/api/tweets', config: TweetApi.find },
   { method: 'GET', path: '/api/tweets/{id}', config: TweetApi.findOne },
