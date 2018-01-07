@@ -1,5 +1,8 @@
 # mytweetapp-web
 
+## Name: Niall Coady
+## Student No. 20041428
+
 ## Built in conjunction with notes and labs from https://wit-ictskills-2017.github.io/enterprise-web-dev/index.html
 
 ### V1.0 Main Features
@@ -36,7 +39,6 @@ password: secret
 email: admin@mytweet.com
 password: admin
 
-#### V1.0 of mytweetapp deployed at https://still-brook-41510.herokuapp.com/
-
 #### V1.2 of mytweetapp deployed at https://mytweetapp-12.herokuapp.com/
+#### Corresponding Android App Repo at https://github.com/Coady1991/mytweetapp-android
 
